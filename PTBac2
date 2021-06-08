@@ -1,0 +1,45 @@
+
+package test;
+
+
+public class PTBac2 extends PTBac1 {
+    private double hs2;
+    public PTBac2(){
+        super();
+        hs2 = 0;
+    }
+    public PTBac2(double hs2, double b, double c){
+        super(b,c);
+        this.hs2 = hs2;
+    }
+
+    public double getHs2() {
+        return hs2;
+    }
+
+    public void setHs2(double hs2) {
+        this.hs2 = hs2;
+    }
+    
+    public String toString(){
+        if(hs2==0) return super.toString();
+        else return hs2+"x^2 "+((hs1>=0)?"+":"") + hs1+"x "+
+                ((hs0>=0)?"+":"") + hs0 + " =0" + giai();
+    }
+    public String giai(){
+        if(hs2==0) return super.giai();
+        else{
+            double d = hs1*hs1-4*hs2*hs0;
+            if(d<0) return " Vo nghiem ";
+            if(d==0) return " x1=x2= " + -hs1/2/hs2;
+            double x1 = (-hs1-Math.sqrt(d))/2/hs2;
+            double x2 = (-hs1+Math.sqrt(d))/2/hs2;
+            return " x1=" + x1 + " , x2= " + x2;
+        }
+    }
+     public int dem() {
+        if(giai()==" Vo nghiem ") return 0;
+        else if(giai().contains(" x1=x2= ")) return 2;
+        else return 1;
+    }
+}
