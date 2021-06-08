@@ -1,0 +1,6 @@
+
+package test;
+public abstract class PhuongTrinh {
+    public abstract String giai();
+    public abstract int dem();
+}
