@@ -1,0 +1,44 @@
+package test;
+
+public class PTBac1 extends PhuongTrinh {
+    protected double hs0, hs1;
+    public PTBac1(){
+        hs0 = hs1 = 0;
+    }
+    public PTBac1(double b, double c){
+        hs1= b; hs0 = c;
+    }
+
+    public double getHs0() {
+        return hs0;
+    }
+
+    public double getHs1() {
+        return hs1;
+    }
+
+    public void setHs0(double hs0) {
+        this.hs0 = hs0;
+    }
+
+    public void setHs1(double hs1) {
+        this.hs1 = hs1;
+    }
+    
+    public String toString(){
+        return hs1 +"x "+((hs0>=0)?"+":"") + hs0 +" =0" + giai();
+    }
+    @Override
+    public String giai() {
+        if(hs1==0)
+            if(hs0==0) return " Vo so nghiem ";
+            else return " Vo nghiem ";
+        else return " x = " + -hs0/hs1;
+    }
+    public int dem() {
+        if(giai()==" Vo nghiem ") return 0;
+        else if (giai()==" Vo so nghiem ") return 2;
+        else return 1;
+    }
+}
+
