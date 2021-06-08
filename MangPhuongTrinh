@@ -1,0 +1,131 @@
+
+package test;
+import java.io.File;
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class MangPhuongTrinh {
+    public ArrayList<PhuongTrinh> a = new ArrayList<PhuongTrinh>();
+    public void docFile(String tenFile){
+        try{
+            File f = new File(tenFile);
+            if(f.exists()){
+                Scanner read = new Scanner(f);
+                while(read.hasNext()){
+                    Scanner line = new Scanner(read.nextLine());
+                    double hs2, hs1, hs0;
+                    hs1 = line.nextDouble();
+                    hs0 = line.nextDouble();
+                    if(line.hasNext()){
+                        hs2 = hs1;
+                        hs1 = hs0;
+                        hs0 = line.nextDouble();
+                        a.add(new PTBac2(hs2,hs1,hs0));
+                    } else a.add(new PTBac1(hs1,hs0));
+                }
+            } else {
+                System.out.println("Khong ton tai file");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    public void demSoPTMoiLoai(){
+        int dem1=0, dem2=0;
+        for(PhuongTrinh x: a)
+            if(x instanceof PTBac2) dem2++;
+        dem1 = a.size()-dem2;
+        System.out.println("3.Bac 1 :" +dem1+" &"+" Bac 2:"+dem2);
+    }
+    public void xuatDanhSachTungLoai(){
+        System.out.println("4.Xuat danh sach tung loai: ");
+        for(PhuongTrinh x: a)
+            if(!(x instanceof PTBac2)) System.out.println(x);
+        System.out.println("");
+        for(PhuongTrinh x: a)
+            if(x instanceof PTBac2) System.out.println(x);
+    }
+    public void sapXep(){
+        for(int i=0; i<a.size()-1; i++)
+            for(int j=i+1; j<a.size(); j++)
+            if(a.get(i) instanceof PTBac2 && !(a.get(j) instanceof PTBac2)){
+                PhuongTrinh x = a.get(i);
+                a.set(i, a.get(j));
+                a.set(j, x);
+            }
+    }
+    public void ghiFile(){
+        System.out.print("6.Nhap ten file can ghi: ");
+        String tenFile;
+        Scanner sc = new Scanner(System.in);
+        tenFile = sc.nextLine();
+        try{
+            File f = new File(tenFile);
+            if(f.exists()){
+                PrintStream out = new PrintStream(f);
+                for(PhuongTrinh x: a){
+                    out.println(x);
+                }
+            } else {
+                System.out.println("Khong ton tai file");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    public void demKetQua(){
+        int voNghiem=0,voSoNghiem=0,coNghiem=0;
+        int voNghiem2=0,nghiemKep=0,coHaiNghiem=0;
+        for(PhuongTrinh x: a){
+            if(!(x instanceof PTBac2)){
+                if(x.dem()==0) voNghiem++;
+                if(x.dem()==1) coNghiem++;
+                if(x.dem()==2) voSoNghiem++;
+            }
+        }
+        for(PhuongTrinh x: a){
+            if(x instanceof PTBac2){
+                if(x.dem()==0) voNghiem2++;
+                if(x.dem()==1) coHaiNghiem++;
+                if(x.dem()==2) nghiemKep++;
+            }
+        }
+        System.out.println("7.");
+        System.out.println("Bac1: ");
+        System.out.println("Vo no: " + voNghiem);
+        System.out.println("Vo so nghiem: " + voSoNghiem);
+        System.out.println("Co no: " + coNghiem);
+        System.out.println("Bac2: ");
+        System.out.println("Vo no: " + voNghiem2);
+        System.out.println("No kep: " + nghiemKep);
+        System.out.println("Co 2 no: " + coHaiNghiem);
+    }
+    public void xuat(String noiDung){
+        System.out.println(noiDung);
+        for(PhuongTrinh x: a){
+            System.out.println(x);
+        }
+    }
+    public void output(){
+        docFile("D:\\PT.txt");
+        System.out.println("Le Trong Thanh Nhan _ CS311-D1_Lab05");
+        xuat("2.Danh sach phuong trinh: ");
+        System.out.println("............................");
+        demSoPTMoiLoai();
+        System.out.println("............................");
+        xuatDanhSachTungLoai();
+        System.out.println("............................");
+        sapXep();
+        xuat("5.Danh sach phuong trinh sau sap xep: ");
+        System.out.println("............................");
+        ghiFile();
+        System.out.println("............................");
+        demKetQua();
+    }
+    public static void main(String[] args) {
+        MangPhuongTrinh a = new MangPhuongTrinh();
+        a.output();
+    }
+}
+
